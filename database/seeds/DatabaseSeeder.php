@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TypeTableSeeder::class);
         $this->call(UnitTableSeeder::class);
         $this->call(StandardTableSeeder::class);
+        $this->call(LocalTableSeeder::class);
 
         Model::reguard();
     }
