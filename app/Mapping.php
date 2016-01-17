@@ -20,4 +20,9 @@ class Mapping extends Model
     {
     	return $this->hasOne('App\Unit', 'id', 'unit_id');
     }
+
+    public function standard()
+    {
+        return $this->hasOne('App\Standard', 'type_id', 'id');
+    }
 }

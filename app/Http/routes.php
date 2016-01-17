@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Route::post('/data/store', 'DataController@storeData');
+
+Route::get('/api/device', 'DeviceController@index');
+Route::get('/api/device/{device_id}/info', 'DeviceController@info');
+Route::get('/api/device/{device_id}/type/{type_id}/data', 'DeviceController@getData');
