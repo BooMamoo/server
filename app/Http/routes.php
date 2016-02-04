@@ -21,3 +21,4 @@ Route::get('/api/local', 'DeviceController@local');
 Route::get('/api/local/{local_id}/device', 'DeviceController@device');
 Route::get('/api/device/{device_id}/info', 'DeviceController@info');
 Route::get('/api/device/{device_id}/type/{type_id}/data', 'DeviceController@getData');
+Route::get('/api/device/{device_id}/type/{type_id}/chart', 'DeviceController@chart');
