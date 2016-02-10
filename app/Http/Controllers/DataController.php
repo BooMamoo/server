@@ -12,6 +12,7 @@ use App\Local;
 use App\Convert;
 use App\Standard;
 use App\Unit;
+use GuzzleHttp\Client;
 
 class DataController extends Controller
 {
@@ -60,6 +61,8 @@ class DataController extends Controller
 					$convert->value = $this->convert($data[$i]['value'], $type_id, $unit);
 					$convert->timestamp = $data[$i]['timestamp'];
 					$convert->save();
+
+					$this->sendToNETPIE($convert);
 				}
 
 				break;
@@ -196,5 +199,19 @@ class DataController extends Controller
 		}
 
 		return $value;
+	}
+
+	public function sendToNETPIE($data)
+	{
+		$url = 'https://api.netpie.io/topic/IoTPlatform/data?retain';
+        $app_key = 'rTnHIcnAKU6A2uu';
+        $app_secret = 'BIecBfLtiXPL3H7RpmmYFdVrl9HKWs';
+
+        $client = new Client();
+
+        $response = $client->request('PUT', $url, [
+            'auth' => [$app_key, $app_secret], 
+            'json' => ['data' => $data]
+        ]);
 	}
 }
