@@ -62,7 +62,7 @@ class DataController extends Controller
 					$convert->timestamp = $data[$i]['timestamp'];
 					$convert->save();
 
-					$this->sendToNETPIE($convert);
+					// $this->sendToNETPIE($convert);
 				}
 
 				break;
