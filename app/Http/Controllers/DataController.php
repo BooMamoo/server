@@ -42,6 +42,8 @@ class DataController extends Controller
 		    	$mapping->device_id = (int)($data['device_id']) + (int)($local[0]->constant);
 		    	$mapping->type_id = $data['type_id'];
 		    	$mapping->unit_id = $data['unit_id'];
+		    	$mapping->min_threshold = $data['min_threshold'];
+		    	$mapping->max_threshold = $data['max_threshold'];
 		    	$mapping->save();
 
 				break;
@@ -102,12 +104,16 @@ class DataController extends Controller
 			    	$mapping->device_id = (int)($data['device_id']) + (int)($local[0]->constant);
 			    	$mapping->type_id = $data['type_id'];
 			    	$mapping->unit_id = $data['unit_id'];
+			    	$mapping->min_threshold = $data['min_threshold'];
+		    		$mapping->max_threshold = $data['max_threshold'];
 			    	$mapping->save();
 			    }
 			    else
 			    {
 			    	$mapping->type_id = $data['type_id'];
 			    	$mapping->unit_id = $data['unit_id'];
+			    	$mapping->min_threshold = $data['min_threshold'];
+		    		$mapping->max_threshold = $data['max_threshold'];
 			    	$mapping->save();
 			    }
 

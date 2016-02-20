@@ -17,6 +17,8 @@ class CreateMappingsTable extends Migration
             $table->integer('device_id')->unsigned();
             $table->integer('type_id')->unsigned();
             $table->integer('unit_id')->unsigned();
+            $table->integer('min_threshold');
+            $table->integer('max_threshold');
             $table->timestamps();
         });
     }
