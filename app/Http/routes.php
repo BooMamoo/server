@@ -12,6 +12,7 @@
 */
 
 Route::post('/data/store', 'DataController@storeData');
+Route::post('/data/edit', 'DataController@editData');
 
 Route::get('/api/local', 'DeviceController@local');
 Route::get('/api/local/{local_id}/device', 'DeviceController@device');

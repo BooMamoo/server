@@ -74,6 +74,52 @@ class DataController extends Controller
 		return 'true';
 	}
 
+	public function editData(Request $request)
+	{
+		$parameter = $request->input('parameter');
+		$local = $request->input('local');
+		$data = $request->input('data');
+
+		$local = Local::where('name', '=', $local)->get();
+
+		switch ($parameter) {
+			case 'device':
+				$device = Device::find((int)($data['id']) + (int)($local[0]->constant));
+		    	$device->name = $data['name'];
+		    	$device->location = $data['location'];
+		    	$device->interval = $data['interval'];
+		    	$device->save();
+
+				break;
+
+			case 'mapping':
+				$mapping = Mapping::find((int)($data['id']) + (int)($local[0]->constant));
+
+				if($mapping == null)
+				{
+					$mapping = new Mapping;
+					$mapping->id = (int)($data['id']) + (int)($local[0]->constant);
+			    	$mapping->device_id = (int)($data['device_id']) + (int)($local[0]->constant);
+			    	$mapping->type_id = $data['type_id'];
+			    	$mapping->unit_id = $data['unit_id'];
+			    	$mapping->save();
+			    }
+			    else
+			    {
+			    	$mapping->type_id = $data['type_id'];
+			    	$mapping->unit_id = $data['unit_id'];
+			    	$mapping->save();
+			    }
+
+				break;
+
+			default:
+				break;
+		}
+
+		return 'true';
+	}
+
 	public function convert($value, $type, $unit)
 	{
 		switch ($type) {
