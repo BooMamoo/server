@@ -12,4 +12,19 @@ class Device extends Model
     {
     	return $this->hasOne('App\Local', 'id', 'local_id');
     }
+
+    public function mapping()
+    {
+    	return $this->hasMany('\App\Mapping', 'device_id')->with(array('type', 'unit'));
+    }
+
+    protected static function boot() 
+    {
+        parent::boot();
+
+        static::deleting(function($device) 
+        { 
+             $device->mapping()->delete();
+        });
+    }
 }

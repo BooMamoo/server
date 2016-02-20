@@ -120,6 +120,34 @@ class DataController extends Controller
 		return 'true';
 	}
 
+	public function deleteData(Request $request)
+	{
+		$parameter = $request->input('parameter');
+		$local = $request->input('local');
+		$data = $request->input('data');
+
+		$local = Local::where('name', '=', $local)->get();
+
+		switch ($parameter) {
+			case 'device':
+				$device = Device::find((int)($data['id']) + (int)($local[0]->constant));
+		    	$device->delete();
+
+				break;
+
+			case 'mapping':
+				$mapping = Mapping::find((int)($data['id']) + (int)($local[0]->constant));
+				$mapping->delete();
+
+				break;
+
+			default:
+				break;
+		}
+
+		return 'true';
+	}
+
 	public function convert($value, $type, $unit)
 	{
 		switch ($type) {
