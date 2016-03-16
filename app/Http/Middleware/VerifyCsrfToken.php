@@ -14,6 +14,8 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         'data/store', 
         'data/edit', 
-        'data/delete'
+        'data/delete',
+        'auth/login',
+        'auth/register'
     ];
 }

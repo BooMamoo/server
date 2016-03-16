@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -61,5 +63,52 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function postLogin(Request $request)
+    {
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        if(Auth::attempt(['email' => $email, 'password' => $password])) 
+        {
+            return Auth::user();
+        }
+        else
+        {
+            return "error";
+        }
+    }
+
+    public function getLogout()
+    {
+        Auth::logout();
+    }
+
+    public function postRegister(Request $request)
+    {
+        $valid = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed'
+        ]);
+
+        if ($valid->fails())
+        {
+            $error = $valid->errors()->all();
+            return "error";
+        }
+
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $user = new User;
+        $user->name = $name;
+        $user->email = $email;
+        $user->password = Hash::make($password);
+        $user->save();
+
+        return "success";
     }
 }

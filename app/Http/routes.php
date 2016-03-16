@@ -22,10 +22,10 @@ Route::get('/api/device/{device_id}/type/{type_id}/data', 'DeviceController@getD
 Route::get('/api/device/{device_id}/type/{type_id}/current', 'DeviceController@getCurrentData');
 Route::get('/api/device/{device_id}/type/{type_id}/chart', 'DeviceController@chart');
 
-// Route::controllers([
-// 	'auth' => 'Auth\AuthController',
-// 	'password' => 'Auth\PasswordController',
-// ]);
+Route::controllers([
+	'auth' => 'Auth\AuthController',
+	'password' => 'Auth\PasswordController',
+]);
 
 // Route::group(['middleware' => 'auth'], function() {
 // 	Route::get('/', 'UserController@index');
