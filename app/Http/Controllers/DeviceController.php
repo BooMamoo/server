@@ -59,7 +59,8 @@ class DeviceController extends Controller
         $chart = Device::find($device_id);
         $chart->standard = Standard::with('type')->where('type_id', '=', $type_id)->get();
         $chart->chart = Convert::select(DB::raw('*, HOUR(timestamp) as hour'))->where('device_id', '=', $device_id)->where('type_id', '=', $type_id)->whereRaw('DATE(timestamp) = CURDATE()')->groupBy('hour')->get();
-
+        $chart->threshold = Mapping::select('min_threshold', 'max_threshold')->where('device_id', '=', $device_id)->where('type_id', '=', $type_id)->get();
+        
         return $chart;
     }
 }

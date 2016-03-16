@@ -20,17 +20,17 @@ class DataController extends Controller
 	{
 		$parameter = $request->input('parameter');
 		$local = $request->input('local');
-		$data = $request->input('data');
+		$data = json_decode($request->input('data'));
 
 		$local = Local::where('name', '=', $local)->get();
 
 		switch ($parameter) {
 			case 'device':
 				$device = new Device;
-				$device->id = (int)($data['id']) + (int)($local[0]->constant);
-		    	$device->name = $data['name'];
-		    	$device->location = $data['location'];
-		    	$device->interval = $data['interval'];
+				$device->id = (int)($data->id) + (int)($local[0]->constant);
+		    	$device->name = $data->name;
+		    	$device->location = $data->location;
+		    	$device->interval = $data->interval;
 		    	$device->local_id = $local[0]->id;
 		    	$device->save();
 
@@ -38,34 +38,29 @@ class DataController extends Controller
 
 			case 'mapping':
 				$mapping = new Mapping;
-				$mapping->id = (int)($data['id']) + (int)($local[0]->constant);
-		    	$mapping->device_id = (int)($data['device_id']) + (int)($local[0]->constant);
-		    	$mapping->type_id = $data['type_id'];
-		    	$mapping->unit_id = $data['unit_id'];
-		    	$mapping->min_threshold = $data['min_threshold'];
-		    	$mapping->max_threshold = $data['max_threshold'];
+				$mapping->id = (int)($data->id) + (int)($local[0]->constant);
+		    	$mapping->device_id = (int)($data->device_id) + (int)($local[0]->constant);
+		    	$mapping->type_id = $data->type_id;
+		    	$mapping->unit_id = $data->unit_id;
+		    	$mapping->min_threshold = $data->min_threshold;
+		    	$mapping->max_threshold = $data->max_threshold;
 		    	$mapping->save();
 
 				break;
 
 			case 'data':
-				for($i = 0 ; $i < count($data) ; $i++)
-				{
-					$mapping_id = (int)($data[$i]['mapping_id']) + (int)($local[0]->constant);
-					$mapping = Mapping::where('id', '=', $mapping_id)->get();
-					$device_id = $mapping[0]->device_id;
-					$type_id = $mapping[0]->type_id;
-					$unit = Unit::find($mapping[0]->unit_id)->unit;
+				$mapping_id = (int)($data->mapping_id) + (int)($local[0]->constant);
+				$mapping = Mapping::where('id', '=', $mapping_id)->get();
+				$device_id = $mapping[0]->device_id;
+				$type_id = $mapping[0]->type_id;
+				$unit = Unit::find($mapping[0]->unit_id)->unit;
 
-					$convert = new Convert;
-					$convert->device_id = $device_id;
-					$convert->type_id = $type_id;
-					$convert->value = $this->convert($data[$i]['value'], $type_id, $unit);
-					$convert->timestamp = $data[$i]['timestamp'];
-					$convert->save();
-
-					// $this->sendToNETPIE($convert);
-				}
+				$convert = new Convert;
+				$convert->device_id = $device_id;
+				$convert->type_id = $type_id;
+				$convert->value = $this->convert($data->value, $type_id, $unit);
+				$convert->timestamp = $data->timestamp;
+				$convert->save();
 
 				break;
 
@@ -80,40 +75,40 @@ class DataController extends Controller
 	{
 		$parameter = $request->input('parameter');
 		$local = $request->input('local');
-		$data = $request->input('data');
+		$data = json_decode($request->input('data'));
 
 		$local = Local::where('name', '=', $local)->get();
 
 		switch ($parameter) {
 			case 'device':
-				$device = Device::find((int)($data['id']) + (int)($local[0]->constant));
-		    	$device->name = $data['name'];
-		    	$device->location = $data['location'];
-		    	$device->interval = $data['interval'];
+				$device = Device::find((int)($data->id) + (int)($local[0]->constant));
+		    	$device->name = $data->name;
+		    	$device->location = $data->location;
+		    	$device->interval = $data->interval;
 		    	$device->save();
 
 				break;
 
 			case 'mapping':
-				$mapping = Mapping::find((int)($data['id']) + (int)($local[0]->constant));
+				$mapping = Mapping::find((int)($data->id) + (int)($local[0]->constant));
 
 				if($mapping == null)
 				{
 					$mapping = new Mapping;
-					$mapping->id = (int)($data['id']) + (int)($local[0]->constant);
-			    	$mapping->device_id = (int)($data['device_id']) + (int)($local[0]->constant);
-			    	$mapping->type_id = $data['type_id'];
-			    	$mapping->unit_id = $data['unit_id'];
-			    	$mapping->min_threshold = $data['min_threshold'];
-		    		$mapping->max_threshold = $data['max_threshold'];
+					$mapping->id = (int)($data->id) + (int)($local[0]->constant);
+			    	$mapping->device_id = (int)($data->device_id) + (int)($local[0]->constant);
+			    	$mapping->type_id = $data->type_id;
+			    	$mapping->unit_id = $data->unit_id;
+			    	$mapping->min_threshold = $data->min_threshold;
+		    		$mapping->max_threshold = $data->max_threshold;
 			    	$mapping->save();
 			    }
 			    else
 			    {
-			    	$mapping->type_id = $data['type_id'];
-			    	$mapping->unit_id = $data['unit_id'];
-			    	$mapping->min_threshold = $data['min_threshold'];
-		    		$mapping->max_threshold = $data['max_threshold'];
+			    	$mapping->type_id = $data->type_id;
+			    	$mapping->unit_id = $data->unit_id;
+			    	$mapping->min_threshold = $data->min_threshold;
+		    		$mapping->max_threshold = $data->max_threshold;
 			    	$mapping->save();
 			    }
 
@@ -130,19 +125,19 @@ class DataController extends Controller
 	{
 		$parameter = $request->input('parameter');
 		$local = $request->input('local');
-		$data = $request->input('data');
+		$data = json_decode($request->input('data'));
 
 		$local = Local::where('name', '=', $local)->get();
 
 		switch ($parameter) {
 			case 'device':
-				$device = Device::find((int)($data['id']) + (int)($local[0]->constant));
+				$device = Device::find((int)($data->id) + (int)($local[0]->constant));
 		    	$device->delete();
 
 				break;
 
 			case 'mapping':
-				$mapping = Mapping::find((int)($data['id']) + (int)($local[0]->constant));
+				$mapping = Mapping::find((int)($data->id) + (int)($local[0]->constant));
 				$mapping->delete();
 
 				break;
@@ -279,19 +274,5 @@ class DataController extends Controller
 		}
 
 		return $value;
-	}
-
-	public function sendToNETPIE($data)
-	{
-		$url = 'https://api.netpie.io/topic/IoTPlatform/data?retain';
-        $app_key = 'rTnHIcnAKU6A2uu';
-        $app_secret = 'BIecBfLtiXPL3H7RpmmYFdVrl9HKWs';
-
-        $client = new Client();
-
-        $response = $client->request('PUT', $url, [
-            'auth' => [$app_key, $app_secret], 
-            'json' => ['data' => $data]
-        ]);
 	}
 }
