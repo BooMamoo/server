@@ -16,6 +16,7 @@ class VerifyCsrfToken extends BaseVerifier
         'data/edit', 
         'data/delete',
         'auth/login',
-        'auth/register'
+        'auth/register', 
+        'admin/local'
     ];
 }

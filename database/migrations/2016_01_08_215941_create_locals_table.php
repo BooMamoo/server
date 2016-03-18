@@ -16,6 +16,9 @@ class CreateLocalsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('constant');
+            $table->string('place');
+            $table->double('latitude', 15, 8);
+            $table->double('longitude', 15, 8);
             $table->timestamps();
         });
     }

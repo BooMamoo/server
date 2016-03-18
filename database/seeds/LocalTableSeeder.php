@@ -15,12 +15,18 @@ class LocalTableSeeder extends Seeder
             'id' => 1,
             'name' => 'Local A',
             'constant' => 0,
+            'place' => 'Bang Kapi',
+            'latitude' => 13.770088,
+            'longitude' => 100.63654829999996,
             'created_at' => new DateTime,
             'updated_at' => new DateTime,
         ],[
             'id' => 2,
             'name' => 'Local B',
             'constant' => 500,
+            'place' => 'AMT Ladprow',
+            'latitude' => 13.7956729,
+            'longitude' => 100.6358626,
             'created_at' => new DateTime,
             'updated_at' => new DateTime,
         ]));

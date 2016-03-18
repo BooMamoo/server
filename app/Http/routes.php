@@ -27,6 +27,8 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+Route::post('/admin/local', 'AdminController@local');
+
 // Route::group(['middleware' => 'auth'], function() {
 // 	Route::get('/', 'UserController@index');
 // });
