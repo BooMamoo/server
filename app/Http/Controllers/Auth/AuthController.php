@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Role;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -72,7 +73,11 @@ class AuthController extends Controller
 
         if(Auth::attempt(['email' => $email, 'password' => $password])) 
         {
-            return Auth::user();
+            $user = Auth::user();
+            $user->isAdmin = $user->hasRole('admin');
+            $user->canView = $user->can('view-content');
+
+            return $user;
         }
         else
         {
@@ -96,7 +101,8 @@ class AuthController extends Controller
         if ($valid->fails())
         {
             $error = $valid->errors()->all();
-            return "error";
+
+            return $error;
         }
 
         $name = $request->input('name');
@@ -106,8 +112,10 @@ class AuthController extends Controller
         $user = new User;
         $user->name = $name;
         $user->email = $email;
-        $user->password = Hash::make($password);
+        $user->password = bcrypt($password);
         $user->save();
+        $member = Role::where('name', '=', 'member')->first();
+        $user->attachRole($member);
 
         return "success";
     }

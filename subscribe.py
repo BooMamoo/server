@@ -3,7 +3,7 @@ import time
 import requests
 
 BROKER_PORT = 44445
-BROKER_HOST = "158.108.181.235"
+BROKER_HOST = "127.0.0.1"
 KEEPALIVE = 60
 TOPIC = 'IoTPlatform/#'
 SERVER = 'http://158.108.34.49/boo/iotserver'

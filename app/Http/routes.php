@@ -28,11 +28,3 @@ Route::controllers([
 ]);
 
 Route::post('/admin/local', 'AdminController@local');
-
-// Route::group(['middleware' => 'auth'], function() {
-// 	Route::get('/', 'UserController@index');
-// });
-
-Route::get('/', function() {
-	return view('welcome');
-});

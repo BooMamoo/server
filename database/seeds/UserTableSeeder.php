@@ -49,12 +49,20 @@ class UserTableSeeder extends Seeder
 		$user = User::where('name', '=', 'Member')->first();
 		$user->attachRole($member);
 
-		$editUser = new Permission();
-		$editUser->name = 'edit-user';
-		$editUser->display_name = 'Edit Users';
-		$editUser->description = 'edit existing users';
-		$editUser->save();
+		$addLocal = new Permission();
+		$addLocal->name = 'add-local';
+		$addLocal->display_name = 'Add Local Site';
+		$addLocal->description = 'add new local site';
+		$addLocal->save();
 
-		$admin->attachPermission($editUser);
+        $viewContent = new Permission();
+        $viewContent->name = 'view-content';
+        $viewContent->display_name = 'View Content';
+        $viewContent->description = 'view content in system';
+        $viewContent->save();
+
+		$admin->attachPermission($addLocal);
+        $admin->attachPermission($viewContent);
+        $member->attachPermission($viewContent);
     }
 }
