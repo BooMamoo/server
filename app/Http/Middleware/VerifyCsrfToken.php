@@ -17,6 +17,7 @@ class VerifyCsrfToken extends BaseVerifier
         'data/delete',
         'auth/login',
         'auth/register', 
-        'admin/local'
+        'admin/local', 
+        'store/gateway'
     ];
 }

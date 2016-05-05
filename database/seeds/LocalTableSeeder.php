@@ -13,7 +13,7 @@ class LocalTableSeeder extends Seeder
     {
         DB::table('locals')->insert(array([
             'id' => 1,
-            'name' => 'Local A',
+            'name' => 'LocalA',
             'constant' => 0,
             'place' => 'Bang Kapi',
             'latitude' => 13.770088,
@@ -22,7 +22,7 @@ class LocalTableSeeder extends Seeder
             'updated_at' => new DateTime,
         ],[
             'id' => 2,
-            'name' => 'Local B',
+            'name' => 'LocalB',
             'constant' => 500,
             'place' => 'AMT Ladprow',
             'latitude' => 13.7956729,

@@ -15,6 +15,10 @@ Route::post('/data/store', 'DataController@storeData');
 Route::post('/data/edit', 'DataController@editData');
 Route::post('/data/delete', 'DataController@deleteData');
 
+Route::get('/api/gateway', 'GatewayController@index');
+Route::post('/store/gateway', 'GatewayController@store');
+Route::get('/download/gateway/{gateway_id}', 'GatewayController@download');
+
 Route::get('/api/local', 'DeviceController@local');
 Route::get('/api/local/{local_id}/device', 'DeviceController@device');
 Route::get('/api/device/{device_id}/info', 'DeviceController@info');

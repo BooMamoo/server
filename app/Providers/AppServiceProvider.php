@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $path = '/var/www/html/boo/server/';
+
+        config([
+            'path' => $path
+        ]);
     }
 }
