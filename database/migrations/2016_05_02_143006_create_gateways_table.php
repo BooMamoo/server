@@ -15,8 +15,8 @@ class CreateGatewaysTable extends Migration
         Schema::create('gateways', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('owner');
             $table->string('path');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }

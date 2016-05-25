@@ -14,29 +14,29 @@ class GatewayTableSeeder extends Seeder
         DB::table('gateways')->insert(array([
             'id' => 1,
             'name' => 'Wifi.py',
-            'owner' => 'Boo Mamoo',
             'path' => 'file/Wifi.py',
+            'user_id' => 1,
             'created_at' => new DateTime,
             'updated_at' => new DateTime,
         ],[
             'id' => 2,
             'name' => 'Bluetooth.py',
-            'owner' => 'Boo Mamoo',
             'path' => 'file/Bluetooth.py',
+            'user_id' => 1,
             'created_at' => new DateTime,
             'updated_at' => new DateTime,
         ],[
             'id' => 3,
             'name' => 'MRF.py',
-            'owner' => 'Boo Mamoo',
             'path' => 'file/MRF.py',
+            'user_id' => 1,
             'created_at' => new DateTime,
             'updated_at' => new DateTime,
         ],[
             'id' => 4,
             'name' => 'MQTT.py',
-            'owner' => 'Boo Mamoo',
             'path' => 'file/MQTT.py',
+            'user_id' => 1,
             'created_at' => new DateTime,
             'updated_at' => new DateTime,
         ]));

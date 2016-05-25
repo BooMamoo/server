@@ -21,7 +21,7 @@ class GatewayController extends Controller
             return response('Unauthorized', 401);
         }
 
-        $gateways = Gateway::All();
+        $gateways = Gateway::with('user')->get();
 
         return $gateways;
     }
@@ -38,7 +38,7 @@ class GatewayController extends Controller
         else
         {
             $user = Auth::user();
-            $owner = $user->name;
+            $user_id = $user->id;
             $name = $request->input('name');
             $contents = $request->input('contents');
             $path_file = 'file/' . $name;
@@ -53,8 +53,8 @@ class GatewayController extends Controller
 
             $gateway = new Gateway;
             $gateway->name = $name;
-            $gateway->owner = $owner;
             $gateway->path = $path_file;
+            $gateway->user_id = $user_id;
             $gateway->save();
 
 			return "true";
